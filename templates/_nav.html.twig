@@ -1,0 +1,41 @@
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+       <li <a href="{{ path('app_product_index') }}"> <img src="{{ asset('images/logo.png') }}" width="200px" alt=""></a> 
+        <ul class="nav nav-pills">
+        {# thanh search #}
+        {# {% if word is null %}
+					<input class="form-control" type="search" placeholder="Search" aria-label="Search" name="word">
+                    <br></br>
+					{% else %}
+					<input class="form-control" type="search" value="{{ word }}" aria-label="Search" name="word">
+					{% endif %} #}
+        <li class="nav-item"> <a href="{{ path('app_product_index') }}" class="nav-link active" aria-current="page">Trang Chu</a> </li></li>          
+        <li class="nav-item">  <a href="{{ path('app_product_about') }}" class="btn btn-info">About</a></li>
+        <li class="nav-item">  <a href="{{ path('app_product_contact') }}" class="btn btn-warning">Contact</a></li>
+        <li class="nav-item"> <a href="{{ path('app_product_index') }}" class="btn btn-secondary active">Products</a></li>
+              {% if app.user %}
+                <li class="nav-item"><a class="btn btn-danger">Hello {{ app.user.name }}</a></li>
+                 <li></li>                       
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                         {# |<a href="{{ path('app_product_new') }}"    
+                       class="btn btn-primary">Add new product</a> #}
+                       <a href="{{ path('app_user_index') }}" class="btn btn-secondary active">User</a>
+                {% else %}
+                 {# <li class="nav-item"><a href="{{ path('app_register') }}" class="btn btn-warning">Register</a></li> #}
+                {% endif %}
+                <li class="nav-item">
+                    <a href="/{{ app.user ? 'logout' : 'login' }}" class="btn btn-dark">
+                        {{ app.user ? 'Logout' : 'Login' }}
+                    </a>
+                </li>
+            <form>
+                <div class="container">
+                <li class="btn btn-link">
+                    <a href="{{ path('app_review_cart') }}">  <svg  xmlns="http://www.w3.org/2000/svg" width="22" height="20" fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 16">
+                    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
+                    </svg></a>
+                </li>
+            </form>
+    </header>
+</div>

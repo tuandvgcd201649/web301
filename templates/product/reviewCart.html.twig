@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Gio Hang {% endblock %}
+
+{% block body %}
+     <div class="container">
+        <div class="row mt-3 mb-4">
+            <div class="col-md-4">
+            {# <div class="card h-100">
+            <img src="{{ asset('images/product/' ~ product.getImage()) }}" alt="{'id': product.id}" class="img-fluid" width="200px" height="155px"> #}
+               <img src="{{ asset('images/product/logo.png') }}" class="img-fluid">
+            </div>
+             <div class="col-md-8">
+                <h1 class="mt-4 mt-md-0">Thanh toan</h1>
+                 <h1>Product</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Tên SP</th>
+                {# <td>{{ product.id }}</td> #}
+            
+            
+                <th>quantity</th>
+                {# <td>{{ product.quantity }}</td> #}
+           
+                <th>Giá</th>
+                {# <td>{{ product.Price }}</td> #}
+               
+            </tr>
+             <th>Total:</th>
+        </tbody>
+    </table>
+             
+               <a href="{{ path('app_product_check') }}" class="btn btn-secondary active"> Tính tiền </a></li>
+                {# {<h2>{{ product.price }} €</h2> #}
+                <hr>
+                {# <b>Description: </b>{{ product.description }} 
+                {{ form_start(form, {'attr': {'class': 'mt-4 p-4 bg-light'}}) }}
+                <div class="form-group">
+                    {{ form_label(form.quantity) }}
+                    {{ form_widget(form.quantity, {
+                        'attr': {
+                            'class': 'form-control ' ~ (form.quantity.vars.valid ? '' : 'is-invalid')
+                        }
+                    }) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.quantity) }}
+                    </div>
+                </div>
+                {{ form_widget(form.add, {'attr': {'class': 'btn btn-warning w-25'}}) }}
+                {{ form_end(form) }}
+            </div>
+        </div> #}
+    </div>  
+{% endblock %}
