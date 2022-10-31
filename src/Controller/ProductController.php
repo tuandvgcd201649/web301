@@ -17,24 +17,41 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\Criteria;
 
 
 
-/**
- * @Route("/product")
- */
+
+    /**
+     * @Route("/product")
+     */
 class ProductController extends AbstractController
 {
-    //chuyển hướng đến trang about
-           /**
+    
+    /**
+     * @Route("/comments", name="app_product_comments")
+     */
+    public function comments(): Response
+    {
+        return $this->render('about/comments.html.twig');
+    }
+    /**
+     * @Route("/home", name="app_product_home")
+     */
+    public function home(): Response
+    {
+        return $this->render('about/home.html.twig');
+    }
+     
+    /**
      * @Route("/about", name="app_product_about")
      */
-    public function show1(): Response
+    public function about(): Response
     {
         return $this->render('about/about.html.twig');
     }
-     //chuyển hướng đến trang contact
-           /**
+     
+    /**
      * @Route("/contact", name="app_product_contact")
      */
     public function contact(): Response
@@ -42,7 +59,7 @@ class ProductController extends AbstractController
         return $this->render('about/contact.html.twig');
     }
 
-             /**
+    /**
      * @Route("/check", name="app_product_check")
      */
     public function check(): Response
@@ -122,38 +139,18 @@ public function checkoutCart(Request               $request,
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
         $Cat = $request->query->get('category');
-        // $sortBy = $request->query->get('sort');
-        // $orderBy = $request->query->get('order');
-        //$word = $request->query->get('word');
-
+        $search = $request->query->get('search');
+        $query = $productRepository->findsearch($search);
         //-----------
         if(!(is_null($Cat)||empty($Cat))){
             $selectedCat=$Cat;  
         }
-        // if(!empty($sortBy)){
-        //     $criteria->orderBy([$sortBy => ($orderBy == 'asc') ? Criteria::ASC : Criteria::DESC]);
-        // }
-    
         else
         $selectedCat="";
-//----------------
-        // if ($minPrice || $maxPrice) {
-        //     $product = $productRepository->findMore($minPrice, $maxPrice, $cat);
-        // } else 
         
-        // $product = $productRepository->findAll();
-
-        // if (!(is_null($cat)) || empty($cat)) {
-        //     $selectedCat = $cat;
-        // } else {
-        //     $selectedCat = "";
-        // }
-        //--------
-//--------------
-        //$tempQuery = $productRepository->findMore($minPrice, $maxPrice, $Cat, $sortBy, $orderBy, $word);
-       // $tempQuery = $productRepository->findMore($minPrice, $maxPrice, $Cat, $word);
         $tempQuery = $productRepository->findMore($minPrice, $maxPrice, $Cat);
         $pageSize = 8;
+
 
     // load doctrine Paginator
         $paginator = new Paginator($tempQuery);
@@ -163,7 +160,7 @@ public function checkoutCart(Request               $request,
 
     // get total pages
         $numOfPages = ceil($totalItems / $pageSize);
-
+        
     // now get one page's items:
         $tempQuery = $paginator
         ->getQuery()
@@ -176,7 +173,8 @@ public function checkoutCart(Request               $request,
             'products' =>  $tempQuery->getResult(),
             'selectedCat' => $selectedCat,
             'categories' => $categoryRepository->findAll(),
-            'numOfPages' => $numOfPages
+            'numOfPages' => $numOfPages,
+            'product' => $request,
         ]);
     }
 

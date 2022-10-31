@@ -4,7 +4,8 @@
 
 {% block body %}
     <h1>Category index</h1>
-
+ <a class="btn btn-dark" href="{{ path('app_category_new') }}">Create new</a>
+ <a class="btn btn-dark" href="{{ path('app_product_index') }}">Back To List Product</a>
     <table class="table">
         <thead>
             <tr>
@@ -33,5 +34,5 @@
         </tbody>
     </table>
 
-    <a class="btn btn-dark" href="{{ path('app_category_new') }}">Create new</a>
+   
 {% endblock %}

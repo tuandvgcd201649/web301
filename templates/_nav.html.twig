@@ -1,15 +1,13 @@
 <div class="container">
+ <div  style="background-color: #D3D3D3;text-align: center">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
        <li <a href="{{ path('app_product_index') }}"> <img src="{{ asset('images/logo.png') }}" width="200px" alt=""></a> 
         <ul class="nav nav-pills">
-        {# thanh search #}
-        {# {% if word is null %}
-					<input class="form-control" type="search" placeholder="Search" aria-label="Search" name="word">
-                    <br></br>
-					{% else %}
-					<input class="form-control" type="search" value="{{ word }}" aria-label="Search" name="word">
-					{% endif %} #}
-        <li class="nav-item"> <a href="{{ path('app_product_index') }}" class="nav-link active" aria-current="page">Home</a> </li></li>          
+       
+					<form action={{ path('app_product_index') }} method="get">
+						<input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
+                     </form>   
+        <li class="nav-item"> <a href="{{ path('app_product_home') }}" class="nav-link active" aria-current="page">Home</a> </li></li>          
         <li class="nav-item">  <a href="{{ path('app_product_about') }}" class="btn btn-info">About</a></li>
         <li class="nav-item">  <a href="{{ path('app_product_contact') }}" class="btn btn-warning">Contact</a></li>
         <li class="nav-item"> <a href="{{ path('app_product_index') }}" class="btn btn-secondary active">Products</a></li>
@@ -20,7 +18,7 @@
                 {% if is_granted('ROLE_ADMIN') %}
                          {# |<a href="{{ path('app_product_new') }}"    
                        class="btn btn-primary">Add new product</a> #}
-                       <a href="{{ path('app_user_index') }}" class="btn btn-secondary active">User</a>
+                       <a href="{{ path('app_user_index') }}" class="btn btn-secondary active">Show List User</a>
                 {% else %}
                  {# <li class="nav-item"><a href="{{ path('app_register') }}" class="btn btn-warning">Register</a></li> #}
                 {% endif %}

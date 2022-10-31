@@ -21,8 +21,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: app_product_index
-
+                target: app_product_home
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -51,7 +50,7 @@ when@test:
         # ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_SELLER, ROLE_ALLOWED_TO_SWITCH]
         # ROLE_ADMIN:   [ROLE_SELLER, ROLE_USER]
         # ROLE_SELLER: [ROLE_USER]
-        # ROLE_USER:   [ROLE_USER]
+        ROLE_USER:   [ROLE_USER]
         ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         ROLE_ADMIN:   [ROLE_USER]
        

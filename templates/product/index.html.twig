@@ -6,31 +6,21 @@
     <div class="container-md">
         <div class="row">
             <div class="col-3">
-                <form action={{ path('app_product_index') }} method="get">
-                          
+                <form action={{ path('app_product_index') }} method="get">           
                    
                     Min Price: <input type="number" name="minPrice">
                     <br></br>
                     Max Price: <input type="number" name="maxPrice"><br></br>
                     <ul class="list-group" style="width: 270px;">
                     <li class="list-group-item active" style="background-color: black;">SELECT CATEGORY</li>
+
                     <select name="category">
-                    {# <option> <a style="text-decoration: none;color: black;" href="{{ path('app_product_index') }}"> 
-                    <li class="list-group-item">All</li></a></a></option> #}
                         <option value="">All</option>
                          {% for category in categories %}
                         <option value="{{ category.id }}" select >{{category.Name}}</option>
                         {% else %}
                         <option value="{{ category.id }}" >{{category.Name}}</option>
                         {% endfor %}
-
-                         {# <option value="">All</option>
-                         {% for category in categories %}
-                        <option value="{{ category.id }}" select >{{category.Name}}</option>
-                        {% else %}
-                        <option value="{{ category.id }}" >{{category.Name}}</option>
-                        {% endfor %} #}
-
                     </select><br></br>
 
                     <input type="submit" value="Filter" class="btn btn-primary"> <br>
@@ -41,51 +31,44 @@
                    <br>
                    <a href="{{ path('app_product_new') }}"
                        class="btn btn-primary">Add new product</a>
-                    
+                   <br>
+                   <a href="{{ path('app_category_new') }}"
+                       class="btn btn-primary">Add new category</a>            
                     {% endif %}
 
-                       {# <br></br> 
-
+                        {# <br></br> 
                         <ul class="list-group" style="width: 270px;">
                     <li class="list-group-item active" style="background-color: black;">CATEGORY</li>
 					<a style="text-decoration: none;color: black;" href="{{ path('app_product_index') }}"> 
-                    <li class="list-group-item">All</li></a></a>
+                    <li style="background-color: #D3D3D3;" class="list-group-item">All</li></a></a>
 					{% for category in categories %}
 						<a style="text-decoration: none;color: black;" href="{{ path('app_product_index', {'category':category.Id}) }}">
-                        <li class="list-group-item">{{ category.Name }}
-							</a> 
-                            
-					{% endfor %} #}
-                    
+                        <li style="background-color: #D3D3D3;" class="list-group-item">{{ category.Name }}
+							</a>                       
+					{% endfor %}   #}
 
                 </form>
                 <br> </br>
                    
             </div>
+
             <div class="col-9">
-                <div class="container" section class="vh-100" style="background-color: #eee;"
->
-                
+                <div class="container" section class="vh-100">       
+
+
+                {# Nếu là admin #}
+                {% if is_granted('ROLE_ADMIN')%}
+                    <h4>Product Listing Managerment</h4>
+                {# Ngược lại Nếu là User #}
+                {% elseif is_granted('ROLE_USER')%}
                     <h4>Product Listing</h4>
-                    
-                    {# lọc sp thấp cao và ngược lại #}
-
-                     <form action={{ path('app_product_index') }} method="get">
-                <div class="row mt-4" style="display: flex">
-                    <div class="col-1"><p>Price: </p></div>
-                    <div class="col-3 pr-1">
-                        <a href="{{ path(app.request.attributes.get('_route'),
-                            app.request.query.all|merge({'sort': 'price', 'order': 'desc'})) }}"
-                           class="btn btn-primary btn-sm">Hi->Low</a>
-                        <a href="{{ path(app.request.attributes.get('_route'),
-                            app.request.query.all|merge({'sort': 'price', 'order': 'asc'})) }}"
-                           class="btn btn-primary btn-sm">Low->Hi</a>
-                    </div>
-                </div>
-                </form>
-
-                    <div class="row row-cols-1 row-cols-md-4 g-4">
-                        {% for product in products %}
+                {# còn nếu chưa login acc thì... #}
+                {% else %} 
+                    <h4> Vui lòng Login Để Mua Sản Phẩm </h4>
+                {% endif %}
+                
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+             {% for product in products %}
                             <div class="col">
                                 <div class="card h-100">
                                     <img class="card-img-top" src="{{ asset('images/product/' ~ product.getImage()) }}" width="200px" height="155px">
@@ -100,7 +83,8 @@
                                     {% if is_granted('ROLE_ADMIN')%}
                                             <a href="{{ path('app_product_showadmin', {'id': product.id}) }}"
                                            class="btn btn-primary">Show</a>
-
+                                           <a class="btn btn-dark" href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                                          {{ include('product/_delete_form.html.twig') }} 
                                             <form action="{{ path('app_add_cart', {'id': product.id}) }}" method="GET">
                                         <input type="number" id="quantity" name="quantity" value="1">
                                         <button href="{{ path('app_add_cart', {'id': product.id}) }}"
@@ -113,7 +97,10 @@
                                             <form action="{{ path('app_add_cart', {'id': product.id}) }}" method="GET">
                                         <input type="number" id="quantity" name="quantity" value="1">
                                         <button href="{{ path('app_add_cart', {'id': product.id}) }}"
-                                        class="btn btn-primary" type="submit">ADD CART</button>                            
+                                        class="btn btn-primary" type="submit">ADD CART</button>  
+
+                                    {% else %} 
+                                          <h4> Login Để Mua Sản Phẩm </h4>                          
                                     {% endif %}
                                     </form>
                                     </div>

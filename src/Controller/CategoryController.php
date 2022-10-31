@@ -19,7 +19,8 @@ class CategoryController extends AbstractController
      * @Route("/", name="app_category_index", methods={"GET"})
      */
     public function index(CategoryRepository $categoryRepository): Response
-    {
+    {   
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('category/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
         ]);
@@ -30,6 +31,7 @@ class CategoryController extends AbstractController
      */
     public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -51,6 +53,7 @@ class CategoryController extends AbstractController
      */
     public function show(Category $category): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('category/show.html.twig', [
             'category' => $category,
         ]);
@@ -61,6 +64,7 @@ class CategoryController extends AbstractController
      */
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
@@ -81,6 +85,7 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }
