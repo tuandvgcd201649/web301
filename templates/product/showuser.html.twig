@@ -20,7 +20,10 @@
                 <th>Price</th>
                 <td>{{ product.Price }}</td>
             </tr>
-            
+             <tr>
+                <th>Mô Tả</th>
+                <td>{{ product.description }}</td>
+            </tr>
             <img src="{{ asset('images/product/' ~ product.getImage()) }}" width="200px" height="155px">
         </tbody>
                 

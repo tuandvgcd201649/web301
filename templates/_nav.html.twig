@@ -4,9 +4,6 @@
        <li <a href="{{ path('app_product_index') }}"> <img src="{{ asset('images/logo.png') }}" width="200px" alt=""></a> 
         <ul class="nav nav-pills">
        
-					<form action={{ path('app_product_index') }} method="get">
-						<input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
-                     </form>   
         <li class="nav-item"> <a href="{{ path('app_product_home') }}" class="nav-link active" aria-current="page">Home</a> </li></li>          
         <li class="nav-item">  <a href="{{ path('app_product_about') }}" class="btn btn-info">About</a></li>
         <li class="nav-item">  <a href="{{ path('app_product_contact') }}" class="btn btn-warning">Contact</a></li>
@@ -29,11 +26,13 @@
                 </li>
             <form>
                 <div class="container">
+                {% if is_granted('ROLE_USER') %}
                 <li class="btn btn-link">
                     <a href="{{ path('app_review_cart') }}">  <svg  xmlns="http://www.w3.org/2000/svg" width="22" height="20" fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 16">
                     <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
                     </svg></a>
                 </li>
+                 {% endif %}
             </form>
     </header>
 </div>

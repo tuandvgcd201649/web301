@@ -7,10 +7,7 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
+            
             <tr>
                 <th>Tên</th>
                 <td>{{ product.Name }}</td>
@@ -23,18 +20,20 @@
                 <th>Mô Tả</th>
                 <td>{{ product.description }}</td>
             </tr>
-            
+                        <img src="{{ asset('images/product/' ~ product.getImage()) }}" width="200px" height="155px">
+
         </tbody>
     </table>
 
     <a class="btn btn-dark" href="{{ path('app_product_index') }}">back to list</a>
-    <a class="btn btn-dark" href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+    <h1>Để Thêm Sản Phẩm Vào Giỏ Hàng, Bạn Cần Đăng Nhập</h1>
+    
     <br></br>
-      <form action="{{ path('app_add_cart', {'id': product.id}) }}" method="GET">Quantity:
-     <input type="number" id="quantity" name="quantity" value="1">
-      <button href="{{ path('app_add_cart', {'id': product.id}) }}" class="btn btn-primary" type="submit">ADD CART</button>
-       <br></br>
-       </form>
-    {{ include('product/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_ADMIN')%}
+    
+     {{ include('product/_delete_form.html.twig') }}
+    {% endif %}
+    
+    
     </div>
 {% endblock %}

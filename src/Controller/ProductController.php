@@ -140,7 +140,11 @@ public function checkoutCart(Request               $request,
         $maxPrice = $request->query->get('maxPrice');
         $Cat = $request->query->get('category');
         $search = $request->query->get('search');
-        $query = $productRepository->findsearch($search);
+        $products = $productRepository->searching($search)->getResult();
+        // $search = $request->query->get('search');
+        // $query = $productRepository->findMore($search);
+        // $product = $query->getResult();
+        // $product = $productRepository->findMore($search);
         //-----------
         if(!(is_null($Cat)||empty($Cat))){
             $selectedCat=$Cat;  
@@ -167,14 +171,22 @@ public function checkoutCart(Request               $request,
         ->setFirstResult($pageSize * ($pageId - 1)) // set the offset
         ->setMaxResults($pageSize); // set the limit
         
-      //  $product =  $tempQuery->getQuery();
+    $products =  $tempQuery->getResult();
 
         return $this->render('product/index.html.twig', [
-            'products' =>  $tempQuery->getResult(),
+            'products' =>  $products,
             'selectedCat' => $selectedCat,
             'categories' => $categoryRepository->findAll(),
             'numOfPages' => $numOfPages,
-            'product' => $request,
+            'catNumber' => $Cat,
+            'minP' => $minPrice,
+            'maxP' => $maxPrice,
+            'search' => $search
+            // 'tongso'=>$totalItems
+            // 'product' => $request,
+            // 'products' => $request,
+            // 'product' => $product,
+            // 'products' => $product,
         ]);
     }
 
@@ -184,6 +196,7 @@ public function checkoutCart(Request               $request,
      */
     public function addCart(Product $product, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $session = $request->getSession();
         // $rq = $request;
         $quantity = (int)$request->query->get('quantity');
@@ -202,9 +215,9 @@ public function checkoutCart(Request               $request,
             $session->set('cartElements', $cartElements);
         }
         //sau khi thêm sp vào thẳng giỏ hàng
-        return $this->redirectToRoute('app_review_cart', [], Response::HTTP_SEE_OTHER);
+        // return $this->redirectToRoute('app_review_cart', [], Response::HTTP_SEE_OTHER);
         return new Response(); //means 200, successful
-        // return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        
     }
 
             /**
@@ -212,12 +225,13 @@ public function checkoutCart(Request               $request,
          */
         public function reviewCart(Request $request): Response
         {
+            $this->denyAccessUnlessGranted('ROLE_USER');
             $session = $request->getSession();
             if ($session->has('cartElements')) {
                 $cartElements = $session->get('cartElements');
             } else
                 $cartElements = [];
-            return $this->render('product/reviewCart.html.twig');
+            // return $this->render('product/reviewCart.html.twig');
             return $this->json($cartElements);
         }       
         //chuyển hướng đến trang reviewCart
@@ -235,14 +249,15 @@ public function checkoutCart(Request               $request,
      */
     public function new(Request $request, ProductRepository $productRepository): Response
     {
-
+    
      $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-
+        // $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
             $productImg = $form->get('Image')->getData();
+            // $product->setPublisher($user);
             if ($productImg) {
                 $originExt = pathinfo($productImg->getClientOriginalName(), PATHINFO_EXTENSION);
                 $newName = $product->getName() . '.' . $originExt;
@@ -283,20 +298,32 @@ public function checkoutCart(Request               $request,
 
     }
     /**
-     * @Route("/{id}", name="app_product_showuser", methods={"GET"})
+     * @Route("/shownologin/{id}", name="app_product_showlogout", methods={"GET"})
      */
-    public function show(Product $product): Response
+    public function showlogout(Product $product): Response
     {
         
+        return $this->render('product/showlogout.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * @Route("/showuser/{id}", name="app_product_showuser", methods={"GET"})
+     */
+    public function showuser(Product $product): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('product/showuser.html.twig', [
             'product' => $product,
         ]);
     }
     /**
-     * @Route("admin/{id}", name="app_product_showadmin", methods={"GET"})
+     * @Route("/admin/{id}", name="app_product_showadmin", methods={"GET"})
      */
     public function showadmin(Product $product): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('product/showadmin.html.twig', [
             'product' => $product,
         ]);

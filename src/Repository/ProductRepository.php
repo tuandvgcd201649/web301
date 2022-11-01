@@ -18,19 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class ProductRepository extends ServiceEntityRepository
 {
     
-    public function findsearch($search): Query
-    {
-        $entityManager = $this->getEntityManager();
-        $qb = $entityManager->createQueryBuilder();
-        $qb->select('p')
-            ->from('App:Product', 'p');
-        if (!(is_null($search) || empty($search))) {
-            $qb->andWhere('p.Title LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
-        }
-        // returns an array of Product objects
-        return $qb->getQuery();
-    }
+    
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -55,6 +43,20 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function searching($search): Query
+    {
+        $entityManager = $this->getEntityManager();
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select('p')
+            ->from('App:Product', 'p');
+        if (!(is_null($search) || empty($search))) {
+            $qb->andWhere('p.Name LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        // returns an array of Product objects
+        return $qb->getQuery();
+    }
+
     public function findMore($minPrice, $maxPrice, $cat): Query
     {
         $entityManager = $this->getEntityManager();
@@ -68,11 +70,16 @@ class ProductRepository extends ServiceEntityRepository
         if (!(is_null($maxPrice) || empty($maxPrice))) {
             $qb->andWhere('p.Price <=' . $maxPrice);
         }
-        //add test share
-        //$qb->andWhere('p.Price <=' . $maxPrice);
+        
         if (!(is_null($cat) || empty($cat))) {
             $qb->andWhere('p.Category =' . $cat);
         }
+
+        
+        // if (!(is_null($search) || empty($search))) {
+        // $qb->andWhere('p.Category LIKE :search')
+        // ->setParameter('search', '%'.$search.'%');
+        // }
         //add test share
         // returns an array of Product objects
         return $qb->getQuery();
