@@ -58,20 +58,25 @@
                 {% if is_granted('ROLE_ADMIN')%}
                 <font ><marquee direction="left" style="background:orange"><h2>Hiện Tại Giỏ Hàng Đang Bug, Để Vào Được Giỏ Bắt Buộc Phải Thêm Sản Phẩm Trước Khi Vào Giỏ.</h2></marquee></font>
                     <h4>Product Listing Managerment</h4>
+                     <h4>Total product: {{ tongso }}</h4> 
+        
                 {# Ngược lại Nếu là User #}
                 {% elseif is_granted('ROLE_USER')%}
                                 <marquee style="border:blue 2px SOLID"><h2>Hiện Tại Giỏ Hàng Đang Bug, Để Vào Được Giỏ Bắt Buộc Phải Thêm Sản Phẩm Trước Khi Vào Giỏ.</h2></marquee></font>
                     <h4>Product Listing</h4>
+                     <h4>Total product: {{ tongso }}</h4> 
+        
                 {# còn nếu chưa login acc thì... #}
                 {% else %} 
                    <h4>Product Listing</h4>
+                    <h4>Total product: {{ tongso }}</h4> 
+        
                 {% endif %}
 
                
 
         <div class="row row-cols-1 row-cols-md-4 g-4">
-        <h4>Total product: {{ tongso }}</h4>
-
+       
              {% for product in products %}
                             <div class="col">
                                 <div class="card h-100">
