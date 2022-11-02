@@ -139,8 +139,8 @@ public function checkoutCart(Request               $request,
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
         $Cat = $request->query->get('category');
-        $search = $request->query->get('search');
-        $products = $productRepository->searching($search)->getResult();
+        // $search = $request->query->get('search');
+        // $products = $productRepository->searching($search)->getResult();
         // $search = $request->query->get('search');
         // $query = $productRepository->findMore($search);
         // $product = $query->getResult();
@@ -181,12 +181,7 @@ public function checkoutCart(Request               $request,
             'catNumber' => $Cat,
             'minP' => $minPrice,
             'maxP' => $maxPrice,
-            'search' => $search
-            // 'tongso'=>$totalItems
-            // 'product' => $request,
-            // 'products' => $request,
-            // 'product' => $product,
-            // 'products' => $product,
+            'tongso'=>$totalItems
         ]);
     }
 
@@ -254,10 +249,10 @@ public function checkoutCart(Request               $request,
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-        // $user = $this->getUser();
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
             $productImg = $form->get('Image')->getData();
-            // $product->setPublisher($user);
+            $product->setPublisher($user);
             if ($productImg) {
                 $originExt = pathinfo($productImg->getClientOriginalName(), PATHINFO_EXTENSION);
                 $newName = $product->getName() . '.' . $originExt;

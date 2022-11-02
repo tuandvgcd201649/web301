@@ -112,17 +112,17 @@ class Product
         return $this;
     }
 
-    // public function getPublisher(): ?User
-    // {
-    //     return $this->publisher;
-    // }
+    public function getPublisher(): ?User
+    {
+        return $this->publisher;
+    }
 
-    // public function setPublisher(?User $publisher): self
-    // {
-    //     $this->publisher = $publisher;
+    public function setPublisher(?User $publisher): self
+    {
+        $this->publisher = $publisher;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     /**
      * @return Collection<int, OrderDetail>
