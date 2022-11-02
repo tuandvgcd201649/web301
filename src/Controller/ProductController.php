@@ -125,7 +125,8 @@ public function checkoutCart(Request               $request,
             // If any change above got trouble, we roll back (undo) all changes made above!
             $entityManager->getConnection()->rollBack();
         }
-        return new Response("Check in DB to see if the checkout process is successful");
+        return $this->render('about/check.html.twig');
+        return new Response("Đã Mua Thành Công, Kiểm Tra database");
     } else
         return new Response("Nothing in cart to checkout!");
 }

@@ -58,7 +58,8 @@
 	{% endfor %}
 	Ghi Chú:
 	<p><span class="h2"> Để Update Quantity. Vui lòng Update Sản Phẩm ☝ bên Trên Ghi Chú Này
-	 ( Sản phẩm cuối cùng từ dưới lên). Sau Khi Update, Sản phẩm sẽ được đưa lên đầu danh sách. </span><span class="h4">	 </span></p>
+	 ( Sản phẩm cuối cùng từ dưới lên). Sau Khi Update, Sản phẩm sẽ được đưa lên đầu danh sách.
+	 Nếu chỉ có 1 sản phẩm, bạn vẫn có thể update nó! </span><span class="h4">	 </span></p>
 			<div class="card mb-5">
 				<div class="card-body p-4">
             		<div class="float-end">
@@ -72,7 +73,8 @@
 	
 			<div class="d-flex justify-content-end">
 				<a href="{{ path('app_product_index') }}" class="btn btn-light">Continue shopping</a>
-				<a href="{{ path('app_checkout_cart') }}" class="btn btn-primary">Tiến Đến Checkout</a>
+				<a href="{{ path('app_checkout_cart') }}" class="btn btn-primary">Mua Luôn Không Suy Nghĩ Nhiều</a>
+				<a href="{{ path('app_checkout_cart') }}" class="btn btn-secondary active"> Tiến Đến Checkout </a></li>
 			</div>
       	</div>
      </div>
