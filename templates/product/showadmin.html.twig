@@ -23,6 +23,10 @@
                 <th>Mô Tả</th>
                 <td>{{ product.description }}</td>
             </tr>
+             <tr>
+                <th>Hình Ảnh</th>
+                <td><img src="{{ asset('images/product/' ~ product.getImage()) }}" width="200px" height="155px"></td>
+            </tr>
             
         </tbody>
     </table>

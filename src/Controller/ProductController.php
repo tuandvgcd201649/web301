@@ -22,6 +22,8 @@ use Doctrine\Common\Collections\Criteria;
 
 
 
+
+
     /**
      * @Route("/product")
      */
@@ -210,34 +212,37 @@ public function checkoutCart(Request               $request,
             $session->set('cartElements', $cartElements);
         }
         //sau khi thêm sp vào thẳng giỏ hàng
-        // return $this->redirectToRoute('app_review_cart', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_review_cart', [], Response::HTTP_SEE_OTHER);
         return new Response(); //means 200, successful
         
     }
 
-            /**
-         * @Route("/reviewCart", name="app_review_cart", methods={"GET"})
-         */
-        public function reviewCart(Request $request): Response
-        {
-            $this->denyAccessUnlessGranted('ROLE_USER');
-            $session = $request->getSession();
-            if ($session->has('cartElements')) {
-                $cartElements = $session->get('cartElements');
-            } else
-                $cartElements = [];
-            // return $this->render('product/reviewCart.html.twig');
-            return $this->json($cartElements);
-        }       
-        //chuyển hướng đến trang reviewCart
-            // /**
-            //  * @Route("/view", name="app_review_cart")
-            //  */
-            // public function show2(Request $request): Response
-            // {
-            //     return $this->render('product/reviewCart.html.twig');
-            // }
-            
+     /**
+    * @Route("/reviewCart", name="app_review_cart", methods={"GET"})
+    */
+    public function reviewcart(Request $request, ProductRepository $productRepository){
+        $total = 0;
+        $session = $request->getSession();
+        $cart = $session->get('cartElements',[]);
+        $cartWithData = [];
+        foreach ($cart as $id => $quantity){
+            $cartWithData[] = [
+                'product' => $productRepository->find($id),
+                'quantity' => $quantity
+            ];
+        }
+        
+        foreach ($cartWithData as $item){
+            $totalItem = $item['product']->getPrice() * $item['quantity'];
+            $total += $totalItem;
+        }
+        return $this->render('cart/cart.html.twig',[
+            'items' => $cartWithData,
+            'total' => $total,
+            'product' => $id,
+        ]);
+    }
+       
 
     /**
      * @Route("/new", name="app_product_new", methods={"GET", "POST"})
