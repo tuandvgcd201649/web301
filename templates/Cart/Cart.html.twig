@@ -8,8 +8,8 @@
 	<div class="container h-100">
 		<div class="row d-flex justify-content-center align-items-center h-100">
 			<div class="col">
-				<p><span class="h2"> Check Lại Đi Đã Mua Nhé ! </span><span class="h4"></span></p>
-				<p><span class="h2"> Hiện quantity đang bug update, để update quantity, đọc kỹ ghi chú bên dưới. </span><span class="h4"></span></p>
+				<p><span class="h2"> Cảm ơn bạn đã tin tưởng lựa chọn sản phẩm của chúng tôi! </span><span class="h4"></span></p>
+				<p><span class="h2"> Mời bạn kiểm tra thông tin và tiến hành thanh toán. </span><span class="h4"></span></p>
     
 	{% for item in items %}
 				<div class="card mb-4">
@@ -33,13 +33,25 @@
 							<div class="col-md-2 d-flex justify-content-center">
 							<div>
 								<form 
-								action="{{ path('app_add_cart', {'id': product}) }}" method="GET">
+								action="{{ path('app_add_cart', {'id': product}) }}"
+								{# href="{{ path('app_add_cart', {'id': product}) }}" #}
+								 method="GET">
                                     <h5> Select Quantity</h5>
                                     <input type="number" id="quantity" name="quantity" value="0"> <br></br>
                                         <button href="{{ path('app_add_cart', {'id': product}) }}"
                                         class="btn btn-primary" type="submit">Update Quantity</button>    
 								</div>
 							</div>
+							{# <div class="col-md-2 d-flex justify-content-center">
+							<div>
+								<form 
+								action="{{ path('app_add_cart', {'id': product}) }}" method="GET">
+                                    <h5> Select Quantity</h5>
+                                    <input type="number" id="quantity" name="quantity" value="0"> <br></br>
+                                        <button href="{{ path('app_add_cart', {'id': product}) }}"
+                                        class="btn btn-primary" type="submit">Update Quantity</button>    
+								</div>
+							</div> #}
 							<div class="col-md-2 d-flex justify-content-center">
 								<div>
 									<p class="small text-muted mb-4 pb-2">Price</p>
@@ -57,9 +69,7 @@
 				</div>
 	{% endfor %}
 	Ghi Chú:
-	<p><span class="h2"> Để Update Quantity. Vui lòng Update Sản Phẩm ☝ bên Trên Ghi Chú Này
-	 ( Sản phẩm cuối cùng từ dưới lên). Sau Khi Update, Sản phẩm sẽ được đưa lên đầu danh sách.
-	 Nếu chỉ có 1 sản phẩm, bạn vẫn có thể update nó! </span><span class="h4">	 </span></p>
+	<p><span class="h2"> Chính sách bảo hành của chúng tôi là 12 tháng và chính sách 1 đổi 1 trong vòng 7 ngày kể từ ngày mua hàng nếu sản phẩm bị lỗi do nhà sản xuất. </span><span class="h4">	 </span></p>
 			<div class="card mb-5">
 				<div class="card-body p-4">
             		<div class="float-end">
@@ -73,7 +83,7 @@
 	
 			<div class="d-flex justify-content-end">
 				<a href="{{ path('app_product_index') }}" class="btn btn-light">Continue shopping</a>
-				<a href="{{ path('app_checkout_cart') }}" class="btn btn-primary">Mua Luôn Không Suy Nghĩ Nhiều</a>
+				
 				<a href="{{ path('app_checkout_cart') }}" class="btn btn-secondary active"> Tiến Đến Checkout </a></li>
 			</div>
       	</div>

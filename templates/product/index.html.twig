@@ -56,13 +56,13 @@
 
                 {# Nếu là admin #}
                 {% if is_granted('ROLE_ADMIN')%}
-                <font ><marquee direction="left" style="background:orange"><h2>Hiện Tại Giỏ Hàng Đang Bug, Để Vào Được Giỏ Bắt Buộc Phải Thêm Sản Phẩm Trước Khi Vào Giỏ.</h2></marquee></font>
+                <font ><marquee direction="left" style="background:orange"><h2>Bạn đang đăng nhập với quyền ADMIN.</h2></marquee></font>
                     <h4>Product Listing Managerment</h4>
                      <h4>Total product: {{ tongso }}</h4> 
         
                 {# Ngược lại Nếu là User #}
                 {% elseif is_granted('ROLE_USER')%}
-                                <marquee style="border:blue 2px SOLID"><h2>Hiện Tại Giỏ Hàng Đang Bug, Để Vào Được Giỏ Bắt Buộc Phải Thêm Sản Phẩm Trước Khi Vào Giỏ.</h2></marquee></font>
+                               <marquee style="border:blue 2px SOLID"><h2>Chào mừng bạn đến với cửa hàng của chúng tôi.</h2></marquee></font>
                     <h4>Product Listing</h4>
                      <h4>Total product: {{ tongso }}</h4> 
         

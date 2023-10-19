@@ -133,7 +133,7 @@ public function checkoutCart(Request               $request,
 
 
     /**
-     * @Route("/list/{pageId}", name="app_product_index", methods={"GET"})
+     * @Route("/index/{pageId}", name="app_product_index", methods={"GET"})
      */
     public function index(Request $request, ProductRepository $productRepository,
     CategoryRepository $categoryRepository,
